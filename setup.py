@@ -1,10 +1,11 @@
-from setuptools import setup, find_packages
+from distutils.core import setup
 
 setup (
     name='semantic_web_pygments',
-    packages=find_packages(),
+    packages=['semantic_web_pygments'],
+    install_requires = ['pygments'],
     entry_points = """
-[pygments.lexer]
-n3  = semantic_web_pygments.sw:Notation3Lexer
-"""
+    [pygments.lexers]
+    N3 = semantic_web_pygments:Notation3Lexer
+    """
 )

@@ -89,7 +89,7 @@ class SparqlLexer(RegexLexer):
             (r'(\s*#.*)', Comment),
             (r'((?:SELECT|ASK|CONSTRUCT|DESCRIBE)\s*(?:DISTINCT|REDUCED)?\s*)((?:\?[a-zA-Z0-9_-]+\s*)+|\*)(\s*)',bygroups(Keyword,Name.Variable,Text)),
             (r'(FROM\s*(?:NAMED)?)(\s*.*)', bygroups(Keyword,Text)),
-            (r'(WHERE)?\s*({)',bygroups(Keyword,Text),'graph'),
+            (r'(WHERE)?\s*(\{)',bygroups(Keyword,Text),'graph'),
             (r'(LIMIT|OFFSET)(\s*[+-]?[0-9]+)',bygroups(Keyword,Literal.String)),
         ],
         'graph':[
@@ -98,11 +98,11 @@ class SparqlLexer(RegexLexer):
             (r'(\s*\?[a-zA-Z0-9_-]*)', Name.Variable, ('triple','predObj')),            
             (r'\s*\[\]\s*', Name.Class, ('triple','predObj')),
             (r'\s*(FILTER\s*)((?:regex)?\()',bygroups(Keyword,Text),'filterExp'),
-            (r'\s*}', Text, '#pop'),
+            (r'\s*\}', Text, '#pop'),
         ],
         'triple' : [
-            (r'(?=\s*})', Text, '#pop'),                    
-            (r'\s*\.\s*', Text, '#pop'),
+            (r'(?=\s*\})', Text, '#pop'),                    
+            (r'\s*(\.|\})\s*', Text, '#pop'),
         ],
         'predObj': [
             include('comments'),
